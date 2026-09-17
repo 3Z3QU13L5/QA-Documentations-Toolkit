@@ -134,3 +134,4 @@ At minimum:
 - **What defects or risks are acceptanble?** No unresolved critical/high-risk authentication or access-control defects.
 - **Who needs to approve or accept the remaining risk?** The appropriate product/engineering stakeholder should explicitly accept any remaining significant risk.
 
+> NOTE: THE QUESTION ARE THERE FOR REFERENCE

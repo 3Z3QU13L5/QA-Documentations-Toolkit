@@ -247,3 +247,5 @@ The feature has a relatively small functional surface area but contains a **high
 ### Recommended QA Action
 
 **Go - only after high/critical risks have been adequately tested and no unresolved authentication/security defects remain.**
+
+> NOTE: THE QUESTION ARE THERE FOR REFERENCE
