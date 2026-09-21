@@ -29,8 +29,8 @@
 ## Positive Scenarios
 
 - What should happen when the system recevies valid input?
-- What represent normal expected behavior?
-- What successful user jorneys must work?
+- Why should these scenarios be tested?
+- Who / What benefits from successful behavior?
 
 ### Scenarios
 -   
@@ -40,8 +40,8 @@
 ## Negative Scenarios
 
 - What happens when invalid input is provided?
-- How should the system behave when something goes wrong?
-- What invalid actions must be rejected?
+- Why are negative scenarios important?
+- Who / What is protected by these scenarios?
 
 ### Scenarios
 
@@ -51,9 +51,9 @@
 
 ## Boundary / Edge Scenarios
 
-- What happens at the limits of the system?
-- What unusual conditions could expose defects?
-- What happens with unexpected but possible input?
+- What unusual or boundary conditions should be explored?
+- Why test these conditions?
+- Who / What could be affected?
 
 ### Scenarios
 
@@ -61,11 +61,13 @@
 -   
 -   
 
+> **Note:** Where the specification does not define exact input limits, these scenarios should be treated as **exploratory questions**, not assumptions about what the system must accept or reject.
+
 ## Integration Scenarios
 
-- What other systems or components interact with this feature?
-- What happens when those dependecies succeed or fail?
-- Where could data become inconsistent?
+- What interactions should be verified?
+- Why test these interactions?
+- Who / What is involved?
 
 ### Scenarios
 -   
@@ -74,9 +76,9 @@
 
 ## Regression Scenarios
 
-- What existing functionality could be affected by this change?
-- Where are the dependecies or shared components?
-- What previously behavior must remain intact?
+- What existing behavior could be affected by changes to login?
+- Why should these areas be included in regression testing?
+- Who / What could be affected?
 
 ### Regression Scenatios
 
