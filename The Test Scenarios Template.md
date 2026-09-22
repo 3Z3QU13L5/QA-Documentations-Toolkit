@@ -65,14 +65,24 @@
 
 ## Integration Scenarios
 
-- What interactions should be verified?
-- Why test these interactions?
-- Who / What is involved?
+- **What interactions should be verified?**
+The interaction between the login mechanism, authentication state, protected pages, navigation, and logout behavior.
+
+- **Why test these interactions?**
+A login operation can succeed independently while the surrounding authentication flow remains defective.
+
+- **Who / What is involved?**
+The user, login mechanism, browser session, protected application area, and logout mechanism.
 
 ### Scenarios
--   
--   
--   
+|ID	|Scenario	|Expected Result	|Priority   |
+|---|-----------|-------------------|-----------|
+|LGN-025	|Login → secure page	|User reaches authenticated area	|Critical   |
+|LGN-026	|Login → refresh → secure page	|User remains authenticated	|High   |
+|LGN-027	|Login → logout → secure page	|Access is denied	|Critical   |
+|LGN-028	|Login → logout → browser Back	|Protected content cannot be used as authenticated content	|High   |
+|LGN-029	|Login → navigate → logout	|Authentication state is terminated	|Critical   |
+|LGN-030	|Attempt direct secure-page access before login	|User is denied access	|Critical   |
 
 ## Regression Scenarios
 
@@ -88,14 +98,25 @@
 
 ## Exploratory Opportunities
 
-- What behavior is defficult to predict in advance?
-- Where should exploratory testing be performed?
-- What assumptions should be challenged?
+- **What behavior is defficult to predict in advance?**
+Authentication behavior involving unexpected input, unusual sequences of login/logout actions, browser navigation, session state changes, and transitions between authenticated and unauthenticated states.
+
+- **Where should exploratory testing be performed?**
+Around the login form, authentication state transitions, protected pages, logout flow, browser navigation, session/cookie behavior, and interactions between failed and successful authentication attempts.
+
+- **What assumptions should be challenged?**
+That successful login always creates a valid session, logout always terminates access, protected pages always require authentication, invalid input is handled consistently, browser navigation cannot bypass authentication, and authentication state remains correct after unusual sequences.
 
 ### Exploratory Areas
-- 
-- 
-- 
+
+    - Authentication state transitions and unusual login/logout sequences
+    - Protected-page access before, during, and after authentication
+    - Browser Back, Forward, Refresh, and direct URL navigation
+    - Session and cookie behavior using browser DevTools
+    - Unexpected, malformed, boundary, or unusual credential input
+    - Repeated or rapid login attempts
+    - Failed → successful → failed authentication sequences
+    - Error handling and unexpected application responses
 
 ## Scenario Converage
 

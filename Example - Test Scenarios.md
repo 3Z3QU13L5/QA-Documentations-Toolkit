@@ -172,42 +172,95 @@ Existing users, protected functionality, navigation flows, and application secur
 
 ## Exploratory Opportunities
 
-- What behavior is defficult to predict in advance?
-- Where should exploratory testing be performed?
-- What assumptions should be challenged?
+- **What behavior is defficult to predict in advance?**
+Authentication behavior involving unexpected input, unusual sequences of login/logout actions, browser navigation, session state changes, and transitions between authenticated and unauthenticated states.
+
+- **Where should exploratory testing be performed?**
+Around the login form, authentication state transitions, protected pages, logout flow, browser navigation, session/cookie behavior, and interactions between failed and successful authentication attempts.
+
+- **What assumptions should be challenged?**
+That successful login always creates a valid session, logout always terminates access, protected pages always require authentication, invalid input is handled consistently, browser navigation cannot bypass authentication, and authentication state remains correct after unusual sequences.
 
 ### Exploratory Areas
-- 
-- 
-- 
+- Authentication state transitions and unusual login/logout sequences
+- Protected-page access before, during, and after authentication
+- Browser Back, Forward, Refresh, and direct URL navigation
+- Session and cookie behavior using browser DevTools
+- Unexpected, malformed, boundary, or unusual credential input
+- Repeated or rapid login attempts
+- Failed → successful → failed authentication sequences
+- Error handling and unexpected application responses
 
 ## Scenario Converage
 
-- What important risks are covered?
-- What risks or behaviors are not yet covered?
-- Why are any scenarios intentionally exclude?
+- **What important risks are covered?**
+The scenarios cover the primary authentication risks identified in the Risk Assessment: valid and invalid credential handling, authentication bypass, protected-page access, session integrity, logout behavior, input validation, navigation, and regression of existing authentication behavior.
 
-### Coverage Notes
+- **What risks or behaviors are not yet covered?**
+The current scenarios do not provide comprehensive coverage of areas such as:
 
-- Covered:
-- Not covered:
-- Reason:
+    - Brute-force and rate-limiting controls
+    - Account lockout behavior
+    - Password reset/recovery
+    - Multi-factor authentication
+    - Credential storage and encryption
+    - Server-side authentication implementation
+    - Concurrent sessions across multiple devices
+    - Session expiration/timeout
+    - Cross-browser compatibility
+    - Accessibility beyond basic login interaction
+    - Performance/load behavior of the authentication service
+    - Specialized penetration/security testing
+
+- **Why are any scenarios intentionally exclude?**
+These areas are excluded because they are either outside the current **User Login / Form Authentication** scope, are not implemented by the practice application, require requirements that are not available, or require specialized testing beyond this feature-level scenario set.
+
+### Coverage Matrix
+
+|Feature / Risk Area	|Covered	|Note  |
+|-----------------------|-----------|-------|
+|Valid credentials	|✓	|Positive authentication    |
+|Invalid credentials	|✓	|Negative authentication    |
+|Empty credentials	|✓	|Negative testing   |
+|Input boundaries	|✓	|Edge scenarios |
+|Authentication state	|✓	|State/integration scenarios    |
+|Logout	|✓	|State/integration/regression   |
+|Protected-page access	|✓	|Security-oriented functional testing   |
+|Authentication redirects	|✓	|Integration testing    |
+|Error handling	|✓	|Negative/regression testing    |
+|Unexpected input	|✓	|Exploratory/edge testing   |
+|Session expiration	|✗	|Not currently covered  |
+|Brute-force protection	|✗	|Specialized security scope |
+|Rate limiting	|✗	|Specialized security scope |
+|Password recovery	|✗	|Outside current feature scope  |
+|MFA	|✗	|Not implemented/in scope   |
+|Credential storage	|✗	|Requires implementation-level/security investigation   |
+|Concurrent sessions	|✗	|Not currently covered  |
+|Performance/load	|✗	|Separate non-functional testing scope  |
+|Accessibility	|Partial	|Requires dedicated accessibility scenarios |
+|Cross-browser behavior	|Partial	|Requires dedicated compatibility testing   |
 
 ## Scenario Summary
 
 ### Total Scenarios
-- Positive:
-- Negative:
-- Edge:
-- Integration:
-- Regression:
-- Exploratory:
+
+|Category	|Count  |
+|-----------|-------|
+|Positive	|4      |
+|Negative	|6      |
+|Boundary/Edge|7    |
+|Integration	|6  |
+|Regression	    |6  |
+|Exploratory Opportunities	|9  |
+|Total Defined Scenarios	|38  |
 
 ### Highest-Priority Scenarios
 
-1. 
-2. 
-3. 
+- **LGN-001** — Valid credentials authenticate successfully
+- **LGN-008 / LGN-030** — Protected functionality cannot be accessed without authentication
+- **LGN-010 / LGN-027 / LGN-029** — Logout correctly terminates authentication
+- **LGN-002–004** — Invalid credentials are rejected
+- **LGN-013 / LGN-026** — Authentication state behaves correctly after refresh
 
 
 
