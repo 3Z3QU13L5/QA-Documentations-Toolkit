@@ -70,66 +70,95 @@ At the boundaries between authenticated and unauthenticated states, particularly
 
 ## 3. Risks / Heuristics
 
-What could go wrong?
-What weaknesses or assumptions should we challenge?
-Which risks deserve special attention?
+**What could go wrong?**
+Invalid credentials might ve accepted, protected content might become accessible without authentication, logout might fail to terminate access, or unusual input might cause unexpected application behavior.
+
+**What weaknesses or assumptions should we challenge?**
+That login always establishes the correct session, logout always terminates it, pretected pages always enforce authentication, and browser navigation cannot expose protected functionality.
+
+**Which risks deserve special attention?**
+Authentication bypass, incorrect session termination, unauthorized protected-page access, incosistent authentication state, and unexpected failures during credential validation.
 
 ### Focus Areas
 
-- 
-- 
-- 
+|Risk	|Exploration Focus	|Priority   |
+|-------|-------------------|-----------|
+|Authentication bypass	|Direct URL access and unexpected navigation	|Critical   |
+|Incorrect session termination	|ogout followed by navigation or refresh	|Critical   |
+|Invalid credentials accepted	|Unusual credential combinations	|High   |
+|Inconsistent authentication state	|Repeated login/logout and browser navigation	|High   |
+|Unexpected input handling	|Long values, whitespace, special characters	|Medium |
+|Incorrect error feedback	|Failed login and recovery sequences	|Medium |
 
 ### Heuristics
 
-- Error handling
-- Boundary conditions
-- State transitions
-- Data integrity
-- Usability
-- Permissions / access
-- Integration behavior
-- Recovery behavior
-- Performance perception
-- Other:
-
-
+- **Error handling:** Introduce invalid input and observe recovery.
+- **Boundary conditions:** Explore unusual credential lengths and character combinations.
+- **State transitions:** Investigate movement between logged-in and logged-out states.
+- **Consistency:** Repeat equivalent actions in different sequences.
+- **Recovery behavior:** Investigate whether the application returns to a valid state after unexpected actions.
+- **Security:** Challenge access restrictions and session termination.
+s
 ## 4. Test Environment
 
-Where will exploration take place?
-What configuration or environment is required?
-What tools or data are needed?
+**Where will exploration take place?**
+On the public *The Internet* practivce application, using its Form Authentication feature.
+
+**What configuration or environment is required?**
+Confirm that the login page loads, the supplied test credentials work, and the secure page and logout functionality are accessible.
+
+**What tools or data are needed?**
+A desktop browser, browser DevTools, the application's documented test credentials, and a place to record session notes and evidence.
 
 ### Environment
 
-- Application:
-- Version / Build:
-- Environment:
-- Browser / Device:
-- OS:
-- Test Data:
-- Supporting Tools:
+- **Application:** The Internet
+- **Login page:** `/login`
+- **Protected page:** `secure`
+- **Browser / Device:** Chrome or another selected browser.
+- **Test Data:**
+    - **Valide username:** `tomsmith`
+    - **Valid password:** `SuperSecretPassword!`
+    - **Invalid Credentials:** Tester-generated values
+- **Supporting Tools:** Browser DevTools, screenshots, session notes.
+- **Session:** Fresh browser session recommended.
 
 ## 5. Exploration Approach
 
-How will we explore the system?
-What paths or behaviors will we investigate?
-What variations should we try?
+**How will we explore the system?**
+Use time-boxed, risk-based exploratory testing. Begin with the normal login and logout flow to establish a baseline, then investigate authentication boundaries through unexpected inputs, navigation sequences, session-state changes, and browser behavior.
+
+**What paths or behaviors will we investigate?**
+Investigate successful and failed authentication, direct access to the secure page, login/logout transitions, browser Back/Forward/Refresh, repeated submissions, session behavior, and transitions between authenticated and unauthenticated states.
+
+**What variations should we try?**
+Vary credential validity, input content, input length, whitespace, character combinations, action order, repeated actions, navigation method, and authentication state. Compare equivalent behaviors performed through different sequences to identify inconsistencies.
 
 ### Approach
 
-- 
-- 
-- 
+|Path	|Investigation   |
+|-------|----------------|
+|Unauthenticated → Login → Secure	|Establish normal authentication behavior    |
+|Unauthenticated → Secure	|Challenge protected-page access |
+|Login failure → Login success	|Investigate recovery from failed authentication |
+|Login success → Refresh	|Investigate session persistence |
+|Login success → Logout → Secure	|Investigate session termination |
+|Login success → Logout → Back/Forward	|Challenge browser navigation behavior   |
+|Login → Navigate → Logout	|Investigate authentication state transitions    |
+|Invalid input → Retry → Valid input	|Investigate error recovery  |
+|Repeated Login / Logout	|Investigate state consistency   |
 
 ### Variations
 
-- Different inputs:
-- Different users:
-- Different states:
-- Different devices/browsers:
-- Different sequences:
-- Unexpected actions:
+|Dimension	|Variations  |
+|-----------|------------|
+|Credentials	|Valid, invalid, partially valid, empty  |
+|Input	|Normal, whitespace, unexpected characters, unusually long   |
+|Action order	|Login → logout, logout → login, failed → successful |
+|Navigation	|Direct URL, links, Back, Forward, Refresh   |
+|Session state	|Authenticated, unauthenticated, recently logged out |
+|Submission	|Single, repeated, rapid |
+|Browser behavior	|Normal navigation, cached/history navigation    |
 
 ## 6. Session Notes
 
