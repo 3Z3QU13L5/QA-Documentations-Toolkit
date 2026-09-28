@@ -162,26 +162,49 @@ Vary credential validity, input content, input length, whitespace, character com
 
 ## 6. Session Notes
 
-What did we observe?
-What surprised us?
-What behavior requires further investigation?
+**What did we observe?**
+Normal authentication and invalid-credential feedback behaved as expected. Direct access to /secure without authentication redirected to the login page. However, during one simulated navigation sequence, the browser displayed previously loaded protected-page content after logout when the Back button was used. Refreshing that page redirected to login.
+
+**What actions were performed during exploration?**
+I established the normal login and logout behavior using the provided valid credentials. I then explored invalid and empty credentials, direct navigation to /secure, page refreshes, browser history, and repeated login/logout sequences. During the session, I also investigated whether the application behaved consistently when revisiting a protected page after logout.
+
+**What new questions emerged?**
+Does the post-logout behavior expose cached protected content, or does it indicate that the server continues to accept an invalidated session? Does the behavior differ across browsers or cache configurations? What are the application's explicit requirements for browser-history behavior after logout?
 
 ### Observations
 
-- 
-- 
-- 
+|Time    |Action / Investigation  |Observation  |Evidence   |
+|--------|------------------------|-------------|-----------|
+|10:00   |Open /login and establish the baseline |Login form loaded with username and password fields |SS-001 |
+|10:05   |Submit valid credentials |Authentication succeeded; redirected to /secure; success message displayed |SS-002  |
+|10:10   |Refresh the protected page |Remained authenticated; protected page loaded normally |SS-003    |
+|10:15   |Log out and directly navigate to /secure |Access was denied; redirected to /login |SS-004 |
+|10:20   |Submit incorrect username and password |Login rejected; appropriate error message displayed |SS-005   |
+|10:25   |Submit empty credentials, then retry with valid credentials |Empty submission rejected; subsequent valid login succeeded |SS-006  |
+|10:32   |Log out, then use the browser Back button |Previously displayed protected-page content appeared in browser history |VID-001   |
+|10:38   |Refresh the page reached through Back navigation |Redirected to /login; protected content no longer displayed |VID-002    |
+|10:43    |Repeat login → logout → Back sequence three times |Previously loaded protected content appeared in two of three simulated attempts |VID-003  |
+|10:50    |Repeat failed login → successful login → logout |Authentication state and error recovery behaved as expected |SS-007 |
+|10:55 |Review findings and capture reproduction notes |Recorded one suspected defect and one unresolved technical question |NOTES-001   |
+
+> Evidence references represent example files in a hypothetical test-evidence repository.
 
 ### Questions Raised
 
-- 
-- 
+- Does the protected response include appropriate cache-control headers? 
+- Is the behavior reproducible in Firefox, Edge, or a private browsing session? 
+- Does the application explicitly require protected content to be inaccessible through browser history after logout?
 
 ## 7. Findings
 
-What did we discover?
-Why does each finding matter?
-What evidence supports the finding?
+**What did we discover?**
+The login form rejected invalid and empty credentials, valid credentials granted access to the protected page, and direct navigation to /secure after logout redirected to login. An unexpected browser-history behavior was observed: previously loaded protected content could reappear after logout without a new server request being established during the session.
+
+**Why does each finding matter?**
+The expected authentication behaviors provide evidence that the principal login and logout flows work under the conditions tested. The browser-history observation matters because sensitive information could remain visible on a shared device after a user logs out, even if server-side access is correctly revoked.
+
+**What evidence supports the finding?**
+Screenshots document successful and unsuccessful authentication. Video recordings capture the post-logout navigation sequence, and reproduction notes record the conditions under which the unexpected behavior appeared.
 
 | ID     | Finding | Severity | Evidence | Action |
 | ------ | ------- | -------- | -------- | ------ |

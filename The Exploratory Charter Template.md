@@ -99,8 +99,8 @@ What variations should we try?
 ## 6. Session Notes
 
 What did we observe?
-What surprised us?
-What behavior requires further investigation?
+What actions were performed during exploration?
+What new questions emerged?
 
 ### Observations
 
