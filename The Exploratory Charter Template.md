@@ -129,7 +129,7 @@ What evidence supports the finding?
 
 What behavior is actually incorrect?
 How can the defect be reproduced?
-What evidence should be attached?
+What impact or risk does each defect introduce?
 
 ### Defects Found
 
