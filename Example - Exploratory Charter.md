@@ -300,3 +300,5 @@ Add regression scenarios covering protected-page access after logout, direct nav
 ### Recommended Next Action
 
 - Investigate the post-logout Back-navigation behavior using network inspection, different browsers, and cache conditions; then determine whether BUG-001 should be confirmed and add the verified behavior to regression coverage.
+
+> NOTE: THE QUESTION ARE THERE FOR REFERENCE
