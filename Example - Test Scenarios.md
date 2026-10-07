@@ -1,13 +1,11 @@
 # Tht Test Scenarios Template
 
-## Feature: Form Authentication
-
-**Application:** The Internet
-**Feature:** User Login / Form Authentication
-**Document Type:** Test Scenarios
-**Test Level:** Functional / Integration
-**Risk Context:** Authentication, session management, input validation
-**Environment:** QA / Test
+**Application:** The Internet <br>
+**Feature:** User Login / Form Authentication <br>
+**Document Type:** Test Scenarios <br>
+**Test Level:** Functional / Integration <br>
+**Risk Context:** Authentication, session management, input validation <br>
+**Environment:** QA / Test <br>
 **Status:** Draft
 
 ## Feature/Area

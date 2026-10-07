@@ -1,5 +1,16 @@
 # Exploratory Testing Charter Template
 
+**Application:** <br>
+**Feature:** <br>
+**Feature URL:** <br>
+**Session ID:** <br>
+**Session Duration:** <br>
+**Test Level:** <br>
+**Environment:** <br>
+**Status:** <br>
+**Tester:** <br>
+**Execution Date:**
+
 ## 1. Mission
 
 What are we trying to learn?

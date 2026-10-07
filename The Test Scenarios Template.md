@@ -1,5 +1,12 @@
 # Tht Test Scenarios Template
 
+**Application:** <br>
+**Feature:** <br>
+**Document Type:** <br>
+**Test Level:** <br>
+**Risk Context:** <br>
+**Environment:** <br>
+**Status:**
 
 ## Feature/Area
 

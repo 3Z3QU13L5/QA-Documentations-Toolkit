@@ -1,5 +1,18 @@
 # Defect Report Template
 
+**Defect ID:** <br>
+**Application:** <br>
+**Feature:** <br>
+**Environment:** <br>
+**Test Level:** <br>
+**Discovery Session:** <br>
+**Discovery Date:** <br>
+**Status:** <br>
+**Severity:** <br>
+**Priority:** <br>
+**Reporter:** <br>
+**Related Risk:**
+
 ## Identification
 
 - What is the defect?

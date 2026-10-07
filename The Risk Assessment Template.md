@@ -1,6 +1,14 @@
 
 # The Risk Assessment Template
 
+**Application:** <br>
+**Feature:** <br>
+**URL:** <br>
+**Assessment Type:** <br>
+**Environment:** <br>
+**Risk Model:** <br>
+**Overall Risk Level:**
+
 ## Risk Identification
 - What could go wrong?
 - Where could failure occure?

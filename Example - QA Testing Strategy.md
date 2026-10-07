@@ -1,8 +1,6 @@
 
 # Example — QA Testing Strategy
 
-## Feature: Form Authentication
-
 **Application:** The Internet. <br>
 **Feature:** User login. <br>
 **URL:** `/login`. <br>

@@ -1,6 +1,11 @@
 
 # The QA Testing Strategy Template
 
+**Application:** <br>
+**Feature:** <br>
+**URL:** <br>
+**Objective:**
+
 ## Feature Overview
 - What is being changed or introduced? 
 - Who will use or be affected by it? 

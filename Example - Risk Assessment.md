@@ -1,14 +1,12 @@
 
 # The Risk Assessment Template
 
-## Feature: Form Authentication
-
 **Application:** The Internet. <br>
 **Feature:** User login. <br>
 **URL:** `/login`. <br>
-**Assessment Type:** Feature-level QA Risk Assessment
-**Environment:** QA / Test
-**Risk Model:** Probability × Impact
+**Assessment Type:** Feature-level QA Risk Assessment <br>
+**Environment:** QA / Test <br>
+**Risk Model:** Probability × Impact <br>
 **Overall Risk Level:** Medium–High
 
 ## Risk Identification

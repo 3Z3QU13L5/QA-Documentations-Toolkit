@@ -1,14 +1,14 @@
 # Exploratory Testing Charter Template
 
-**Application:** The Internet
-**Feature:** User Login / Form Authentication
-**Feature URL:** `/login`
-**Session ID:** ETC-LOGIN-001
-**Session Duration:** 60 minutes
-**Test Level:** Functional / Integration / Security-oriented
-**Environment:** Public practice application
-**Status:** Planned
-**Tester:** TBD
+**Application:** The Internet <br>
+**Feature:** User Login / Form Authentication <br>
+**Feature URL:** `/login` <br>
+**Session ID:** ETC-LOGIN-001 <br>
+**Session Duration:** 60 minutes <br>
+**Test Level:** Functional / Integration / Security-oriented <br>
+**Environment:** Public practice application <br>
+**Status:** Planned <br>
+**Tester:** Tester <br>
 **Execution Date:** TBD
 
 ## 1. Mission
