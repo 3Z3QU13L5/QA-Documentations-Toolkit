@@ -93,9 +93,13 @@ The inconsistent reproduction rate means additional investigation is required be
 
 ## Expected vs Actual
 
-- What should happen?
-- What actually happened?
-- What is the difference between expected and actual behavior?
+- **What should happen?** After logout, the authenticated session should no longer provide access to protected functionality or protected information. Browser navigation should not allow the user to bypass the application's authentication boundary. <br>
+- **What actually happened?** After logout, pressing the browser Back button can display the previously loaded protected page. In the simulated session, the content appeared without first performing another successful login.
+
+    Refreshing the page redirected the user to /login. <br>
+- **What is the difference between expected and actual behavior?** The application correctly rejects direct access to /secure after logout, but browser Back navigation can redisplay content that was previously loaded while the user was authenticated.
+
+The observed behavior therefore creates an inconsistency between server/application access control and browser navigation behavior.
 
 ### Expected Result
 
@@ -103,9 +107,16 @@ The inconsistent reproduction rate means additional investigation is required be
 
 ## Impact
 
-- Who or what is affected?
-- How does the defect affect the user or system?
-- What could happen if it reaches production?
+- **Who or what is affected?**
+    Users who access the application from a shared or subsequently reused device may be affected. The affected functionality includes protected-page content displayed during an authenticated session.
+
+- **How does the defect affect the user or system?**
+    A logged-out user may still see previously displayed protected information through browser history. This can create confusion about whether logout was successful and may expose information to someone who subsequently uses the same browser.
+
+- **What could happen if it reaches production?**
+    Depending on the sensitivity of protected content, information from a previous authenticated session could potentially be viewed by another person using the same device.
+
+    The current evidence does not establish that a new protected request can be successfully made after logout.
 
 **User Impact**
 <br>
@@ -118,39 +129,92 @@ The inconsistent reproduction rate means additional investigation is required be
 
 ## Severity
 
-- How serious is the defect?
-- What happens if it remains unsolved?
-- Can users work around it?
+- **How serious is the defect?**
+    <br>
+    **Medium — provisional.**
 
-**Severity:** Blocker/Critical/Major/Minor/Trivial
+    The defect potentially exposes previously displayed protected information after logout, but the current evidence does not demonstrate an authentication bypass or successful retrieval of new protected data.
+
+- **What happens if it remains unsolved?**
+    Previously viewed protected information may remain visible through browser history after logout. The practical impact depends on the sensitivity of the information and the application's intended logout behavior.
+
+- **Can users work around it?**
+    Yes, a user can close the browser, avoid using Back, or refresh the page, which causes the application to redirect to login in the simulated scenario.
+
+    However, relying on user behavior is not considered a satisfactory resolution for a session-management concern.
+
+**Severity:** Medium — provisional.
 <br>
 
 **Justification**
+Severity is provisionally classified as Medium because the issue involves potentially sensitive information exposure but has not been demonstrated to bypass server-side authentication.
+
+Severity should be reassessed after technical investigation confirms the source and scope of the behavior.
 
 ## Priority
 
-- How urgently should this be fixed?
-- Why does it need this level of priority?
-- What release or activity could it affect?
+- **How urgently should this be fixed?**
+    <br>
+    **High — provisional.**
 
-**Priority:** --
+    The defect should be investigated before treating the logout functionality as fully verified because it concerns the boundary between authenticated and unauthenticated states.
+
+- **Why does it need this level of priority?**
+    Logout is a security-relevant operation. An unresolved discrepancy between logout behavior and browser navigation could affect user trust and potentially expose protected information.
+
+- **What release or activity could it affect?**
+    It should be resolved or explicitly accepted before a release containing authentication or session-management changes is considered complete.
+
+**Priority:** High — provisional.
 <br>
 
-**Justification:** --
+**Justification:** The priority is higher than the provisional severity because the defect affects an authentication boundary and requires technical clarification before the QA risk can be confidently assessed.
 
 ## Evidence
 
-- What evidence proves the defect exists?
-- What information would help developers investigate it?
-- Can failure be observed in logs, network requests, database records, or other evidence?
+- **What evidence proves the defect exists?**
+- **What information would help developers investigate it?**
+    The following evidence would help determine the technical cause:
 
-**Screenshot / Video / Console Logs / Network logs / API Response / Database evidence / Device logs / Others**
+    * Browser Network requests during the Back navigation.
+    * Response headers from the /secure page.
+    * Cache-Control headers.
+    * Browser history and Back-Forward Cache behavior.
+    * Session/cookie state before and after logout.
+    * Whether the browser makes a new request when the protected page reappears.
+
+- **Can failure be observed in logs, network requests, database records, or other evidence?**
+    The browser behavior is directly observable, but the current simulated session did not collect sufficient network or server-side evidence to determine whether the content was retrieved from the server or restored from browser history/cache.
+
+    Network inspection is therefore a required follow-up investigation.
+
+    **Screenshot / Video / Console Logs / Network logs / API Response / Database evidence / Device logs / Others**
 
 ## Technical Investigation
 
-- What component appears to be responsible?
-- What evidence supports this hypothesis?
-- What areas should developers investigate?
+- **What component appears to be responsible?**
+    The exact responsible component is currently unknown.
+
+    Potential areas include browser caching/history behavior, Back-Forward Cache, HTTP response caching configuration, frontend navigation behavior, or session-management implementation.
+
+- **What evidence supports this hypothesis?**
+    The strongest indication is that:
+
+    * Direct access to /secure after logout is denied.
+    * Browser Back can redisplay previously loaded protected content.
+    * Refreshing the redisplayed page causes a redirect to /login.
+
+    This behavior is consistent with the possibility that the browser is displaying previously loaded content rather than obtaining newly authorized content from the server.
+
+- **What areas should developers investigate?**
+    Developers should investigate:
+
+    * Cache-Control and related response headers for protected pages.
+    * Browser Back-Forward Cache behavior.
+    * Whether logout fully invalidates the server-side session.
+    * Whether /secure makes a new network request when restored through Back navigation.
+    * Authentication cookie/session state before and after logout.
+    * Application behavior when a protected page is restored from browser history.
 
 ### Suspected Component
 <br>
@@ -163,28 +227,56 @@ The inconsistent reproduction rate means additional investigation is required be
 
 ## Resolution / Verification
 
-- What was changed to resolve the defect?
-- How was the fix verified?
-- What regression testing is required?
+- **What was changed to resolve the defect?**
 
-**Fix Version / Build:** 
-<br>
+    **Pending.** No fix has yet been implemented in this simulated report.
 
-**Verification Steps:**
-1. 
-2. 
-3. 
+- **How was the fix verified?**
 
-### Regression Performed
+    **Pending.** After implementation, QA should reproduce the original sequence:
+    <br>
+    **Login → Secure → Logout → Back → Refresh**
 
+    The verification should confirm that:
 
-**Verification Result:** Passed / Failed
+    * Previously protected content is not improperly exposed.
+    * Direct access to /secure after logout remains denied.
+    * Refresh after logout continues to require authentication.
+    * Session state is correctly invalidated.
+    * The expected behavior is consistent across the supported browser configurations.
+
+- **What regression testing is required?**
+
+    Regression coverage should include:
+
+    * Login with valid credentials.
+    * Login with invalid credentials.
+    * Direct access to /secure while unauthenticated.
+    * Successful logout.
+    * Direct /secure access after logout.
+    * Browser Back after logout.
+    * Browser Forward after logout.
+    * Refresh after logout.
+    * Re-login after logout.
+    * Repeated login/logout sequences.
+    * Session/cookie behavior after logout.
 
 ## Closure
 
-- Has the defect been successfully resolved?
-- Is there any remaining risk?
-- Who confirmed the result?
+- **Has the defect been successfully resolved?**
+<br>
+**No — Open.** The defect remains unresolved pending technical investigation and a verified fix.
+
+- **Is there any remaining risk?**
+<br>
+Yes. <br>
+The remaining risk is potential exposure of previously viewed protected information through browser navigation after logout. The extent of the risk remains uncertain until the technical cause is established.
+
+- **Who confirmed the result?**
+
+    **QA Engineer:** Pending verification <br>
+    **Developer:** Pending investigation/fix <br>
+    **Product Owner / Security:** Pending risk confirmation where applicable
 
 ### Status
 
