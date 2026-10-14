@@ -14,7 +14,7 @@
 ## Execution Overview
 - What was tested?
 - Why was the testing performed?
-- When was it executed?
+- What was the overall execution outcome?
 
 ### Execution
 
@@ -68,9 +68,9 @@
 - What happened when they were executed?
 - Which scenarios passed or failed?
 
-|Test ID	|Scenario	|Result	|Defect ID	|Evidence   |
-| --------- | --------- | ----- | --------- | --------- |
-|TC-001		|           |Pass / Fail / Blocked	|   |   |
+|ID	|Test Scenario	|Expected Result	|Actual Result	|Status |Evidence   |
+| - | ------------- | ----------------- | ------------- | ----- | --------- |
+|TC-001		|           |   	|       |       |       |
 
 ## Execution Statistics
 
