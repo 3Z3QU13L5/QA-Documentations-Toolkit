@@ -53,11 +53,11 @@ The available evidence does not establish whether the browser is restoring cache
 
 ### Evidence
 
-VID-001 — Video: Previously loaded protected content appears after logout and browser Back navigation.
-VID-002 — Video: Refreshing the redisplayed page redirects to /login.
-VID-003 — Video: Repeated reproduction attempts; the behavior occurred in 2 of 3 simulated attempts.
-SS-004 — Screenshot: Direct access to /secure after logout is denied.
-ETC-LOGIN-001 — Exploratory Testing Charter: Documents the discovery and investigation notes.
+**VID-001 — Video**: Previously loaded protected content appears after logout and browser Back navigation.
+**VID-002 — Video**: Refreshing the redisplayed page redirects to /login.
+**VID-003 — Video**: Repeated reproduction attempts; the behavior occurred in 2 of 3 simulated attempts.
+**SS-004 — Screenshot**: Direct access to /secure after logout is denied.
+**ETC-LOGIN-001 — Exploratory Testing Charter**: Documents the discovery and investigation notes.
 
 **Additional evidence required:** Browser Network/DevTools records, protected-page response headers, cache behavior, and session state before and after logout.
 

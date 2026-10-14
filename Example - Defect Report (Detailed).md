@@ -21,12 +21,12 @@
 
 ### Defect
 
-- ID:
-- Title:
-- Date:
-- Report:
-- Envieoment:
-- Build/Version:
+- **ID:** BUG-001
+- **Title:** Back button allow accessto protected-page content
+- **Date:** September 28, 2026
+- **Report:** in ETC-LOGIN-001
+- **Envieoment:** Chrome — Desktop
+- **Build/Version:** --
 
 ## Context
 
@@ -35,13 +35,13 @@
 - **Why does this behavior matter?** A user may expect logout to prevent further access to information from the authenticated session. If protected information remains visible through browser history, another person using the same device could potentially view information from the previous session.
 
 ### Feature/Area
-- 
+- User authentication
 
 ### Context
-- 
+-  Previously loaded protected-page content can become visible again through the browser Back button after the user logs out
 
 ### Expected Result
-- 
+- After logout, the authenticated session should no longer provide access to protected functionality or protected information. Browser navigation should not expose protected content in a way that violates the application's security requirements.
 
 ## Reproduction
 
@@ -103,7 +103,13 @@ The observed behavior therefore creates an inconsistency between server/applicat
 
 ### Expected Result
 
+After logout, the authenticated session should no longer provide access to protected functionality or protected information. Browser navigation should not expose protected content in a way that violates the application's security requirements.
+
 ### Actual Result
+
+After logout, pressing the browser Back button can display the previously loaded protected-page content. In the simulated exploratory session, this behavior occurred in 2 of 3 attempts. Refreshing the page redirected the user to /login.
+
+The available evidence does not establish whether the browser is restoring cached content or whether a new request to the protected resource is being authorized incorrectly.
 
 ## Impact
 
@@ -118,14 +124,9 @@ The observed behavior therefore creates an inconsistency between server/applicat
 
     The current evidence does not establish that a new protected request can be successfully made after logout.
 
-**User Impact**
-<br>
+**User Impact**  Users who access the application from a shared or subsequently reused device may be affected. <br> 
 
-**Business Impact**
-<br>
-
-**Technical Impact**
-<br>
+**Business Impact** Depending on the sensitivity of protected content, information from a previous authenticated session could potentially be viewed by another person using the same device. <br>
 
 ## Severity
 
@@ -216,14 +217,6 @@ Severity should be reassessed after technical investigation confirms the source 
     * Authentication cookie/session state before and after logout.
     * Application behavior when a protected page is restored from browser history.
 
-### Suspected Component
-<br>
-
-### Technical Notes
-<br>
-
-### Supporting Evidence
-<br>
 
 ## Resolution / Verification
 
@@ -269,8 +262,7 @@ Severity should be reassessed after technical investigation confirms the source 
 
 - **Is there any remaining risk?**
 <br>
-Yes. <br>
-The remaining risk is potential exposure of previously viewed protected information through browser navigation after logout. The extent of the risk remains uncertain until the technical cause is established.
+Yes.
 
 - **Who confirmed the result?**
 
@@ -280,11 +272,15 @@ The remaining risk is potential exposure of previously viewed protected informat
 
 ### Status
 
-Open / In Progress / Resolved / Reopened / Closed / Won't Fix
+**Open**
 
 ### Remaining Risk
-- 
-- 
+The remaining risk is potential exposure of previously viewed protected information through browser navigation after logout. The extent of the risk remains uncertain until the technical cause is established.
 
 ### Closed By
+
+TBD
+
 ### Closure Date
+
+TBD
