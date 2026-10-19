@@ -15,11 +15,10 @@
 
 ## Identification
 
+### Defect
 - **What is the defect?** Previously loaded protected-page content can become visible again through the browser Back button after the user logs out. <br>
 - **Where does it occur?** The behavior occurs during browser navigation from the login page back to the previously visited `/secure` page after logout. <br>
 - **When was it discovered?** The defect was discovered during exploratory session **ETC-LOGIN-001** on September 28, 2026, while investigating authentication state transitions and logout behavior.
-
-### Defect
 
 - **ID:** BUG-001
 - **Title:** Back button allow accessto protected-page content
@@ -30,20 +29,29 @@
 
 ## Context
 
-- **What functionality is affected?** User authentication, logout, protected-page access, browser navigation, and session-related behavior. <br>
-- **What were you trying to accomplish?** The exploratory session was investigating whether authentication state was correctly maintained when transitioning between authenticated and unauthenticated states, particularly after logout. <br>
+
 - **Why does this behavior matter?** A user may expect logout to prevent further access to information from the authenticated session. If protected information remains visible through browser history, another person using the same device could potentially view information from the previous session.
 
 ### Feature/Area
+- **What functionality is affected?** User authentication, logout, protected-page access, browser navigation, and session-related behavior. <br>
+
 - User authentication
 
 ### Context
+
+- **What were you trying to accomplish?** The exploratory session was investigating whether authentication state was correctly maintained when transitioning between authenticated and unauthenticated states, particularly after logout. <br>
+
 -  Previously loaded protected-page content can become visible again through the browser Back button after the user logs out
 
 ### Expected Result
 - After logout, the authenticated session should no longer provide access to protected functionality or protected information. Browser navigation should not expose protected content in a way that violates the application's security requirements.
 
 ## Reproduction
+
+### Preconditions
+1. None
+
+### Steps to Reproduce
 
 - **What steps cause the defect?** <br>
     1. Open the /login page.
@@ -57,23 +65,6 @@
     9. Press the browser Back button.
     10. Observe the previously displayed protected page.
 
-- **What data or conditions are required?** <br>
-    * A valid test account.
-    * A successful authenticated session.
-    * Access to the /secure protected page.
-    * Browser history containing the previously loaded protected page.
-    * Logout performed before using browser Back.
-    * Desktop Chrome browser in the simulated session.
-
-- **Can the defect be reproduced consistently?** <br>
-The behavior was reproduced in **2 of 3 simulated attempts.**
-
-The inconsistent reproduction rate means additional investigation is required before determining the exact technical cause.
-
-### Preconditions
-1. None
-
-### Steps to Reproduce
 |Step	|Action	|Expected	|Actual |
 | ----- | ----- | --------- | ----- |
 |1	|Open /login	|Login page displayed	|Login page displayed   |
@@ -85,29 +76,36 @@ The inconsistent reproduction rate means additional investigation is required be
 
 ### Test Data 
 
+- **What data or conditions are required?** <br>
+    * A valid test account.
+    * A successful authenticated session.
+    * Access to the /secure protected page.
+    * Browser history containing the previously loaded protected page.
+    * Logout performed before using browser Back.
+    * Desktop Chrome browser in the simulated session.
+
 - Valid Username and Password
 
 ### Reproducibility
+
+- **Can the defect be reproduced consistently?** <br>
+The behavior was reproduced in **2 of 3 simulated attempts.**
+
+The inconsistent reproduction rate means additional investigation is required before determining the exact technical cause.
 
 **Frequency:** Sometimes
 
 ## Expected vs Actual
 
-- **What should happen?** After logout, the authenticated session should no longer provide access to protected functionality or protected information. Browser navigation should not allow the user to bypass the application's authentication boundary. <br>
-- **What actually happened?** After logout, pressing the browser Back button can display the previously loaded protected page. In the simulated session, the content appeared without first performing another successful login.
-
-    Refreshing the page redirected the user to /login. <br>
 - **What is the difference between expected and actual behavior?** The application correctly rejects direct access to /secure after logout, but browser Back navigation can redisplay content that was previously loaded while the user was authenticated.
 
 The observed behavior therefore creates an inconsistency between server/application access control and browser navigation behavior.
 
 ### Expected Result
-
-After logout, the authenticated session should no longer provide access to protected functionality or protected information. Browser navigation should not expose protected content in a way that violates the application's security requirements.
+- **What should happen?** After logout, the authenticated session should no longer provide access to protected functionality or protected information. Browser navigation should not allow the user to bypass the application's authentication boundary.
 
 ### Actual Result
-
-After logout, pressing the browser Back button can display the previously loaded protected-page content. In the simulated exploratory session, this behavior occurred in 2 of 3 attempts. Refreshing the page redirected the user to /login.
+- **What actually happened?** After logout, pressing the browser Back button can display the previously loaded protected page. In the simulated session, the content appeared without first performing another successful login. Refreshing the page redirected the user to /login.
 
 The available evidence does not establish whether the browser is restoring cached content or whether a new request to the protected resource is being authorized incorrectly.
 
@@ -256,30 +254,26 @@ Severity should be reassessed after technical investigation confirms the source 
 
 ## Closure
 
-- **Has the defect been successfully resolved?**
-<br>
+### Status
+- **Has the defect been successfully resolved?**<br>
+
 **No — Open.** The defect remains unresolved pending technical investigation and a verified fix.
 
-- **Is there any remaining risk?**
+**Open**
+
+### Remaining Risk
+- **Is there any remaining risk?** Yes.
 <br>
-Yes.
+
+The remaining risk is potential exposure of previously viewed protected information through browser navigation after logout. The extent of the risk remains uncertain until the technical cause is established.
+
+### Closed By
 
 - **Who confirmed the result?**
 
     **QA Engineer:** Pending verification <br>
     **Developer:** Pending investigation/fix <br>
     **Product Owner / Security:** Pending risk confirmation where applicable
-
-### Status
-
-**Open**
-
-### Remaining Risk
-The remaining risk is potential exposure of previously viewed protected information through browser navigation after logout. The extent of the risk remains uncertain until the technical cause is established.
-
-### Closed By
-
-TBD
 
 ### Closure Date
 

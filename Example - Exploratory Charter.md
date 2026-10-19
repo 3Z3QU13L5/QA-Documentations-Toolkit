@@ -13,41 +13,32 @@
 
 ## 1. Mission
 
+### Charter
+
 **What are we trying to learn?**
 Investigate how the login functionality behaves when user perform unexpected actions, enter unusual credentials, or transition between authenticated and unauthenticated state.
 
 **Why is this area worth exploring?**
 Predifined scenarios cover expected behaviors, but unusual action sequences may reveal authentication, session-managemente navigation, and error handling defects that scripted test could overlook. 
 
-**What questions should the session answer?**
-- Can unexpected user actions produce an incorrect authentication state?
-- Can protected content remain accesible after logout or without authentication?
-- Does the application recover correctly from invalid and unusual navigation sequences?
-
-### Charter
-
 Explore the User Login feature to discover unexpected behavior involving authentication state, session termination, protected-page access, and input handling.
 
 **Primary objective:** Identify authentication-related risks that are not adequately explained or covered by existing test scenarios.
 
 ### Questions to Answer
-
+**What questions should the session answer?**
 - Can unexpected user actions produce an incorrect authentication state?
 - Can protected content remain accesible after logout or without authentication?
 - Does the application recover correctly from invalid and unusual navigation sequences?
 
 ## 2. Scope
 
-**What are we exploring?**
-The login form, credential validation, authentication feedback, successful login, secure-page access, browser navigation, and logout. 
-
-**What is outside the session's scope?**
-Passworf recovery, user registration, multi-factor authentication, load testing, brute-force testing, and specialized penetration testing.
-
 **Which areas deserve attention during this session?**
 At the boundaries between authenticated and unauthenticated states, particularly during login, logout, refresh, briwser navigation, and direct access to protected pages.
 
 ### In Scope
+**What are we exploring?**
+The login form, credential validation, authentication feedback, successful login, secure-page access, browser navigation, and logout. 
 
 - Login with valid and invalid credentials.
 - Unexpected credential combinations.
@@ -60,6 +51,8 @@ At the boundaries between authenticated and unauthenticated states, particularly
 - Error-message consistency.
 
 ### Out of Scope
+**What is outside the session's scope?**
+Passworf recovery, user registration, multi-factor authentication, load testing, brute-force testing, and specialized penetration testing.
 
 - Password reset and account recovery.
 - Account creation and management.
@@ -71,15 +64,14 @@ At the boundaries between authenticated and unauthenticated states, particularly
 ## 3. Risks / Heuristics
 
 **What could go wrong?**
-Invalid credentials might ve accepted, protected content might become accessible without authentication, logout might fail to terminate access, or unusual input might cause unexpected application behavior.
+Invalid credentials might be accepted, protected content might become accessible without authentication, logout might fail to terminate access, or unusual input might cause unexpected application behavior.
 
 **What weaknesses or assumptions should we challenge?**
 That login always establishes the correct session, logout always terminates it, pretected pages always enforce authentication, and browser navigation cannot expose protected functionality.
 
+### Focus Areas
 **Which risks deserve special attention?**
 Authentication bypass, incorrect session termination, unauthorized protected-page access, incosistent authentication state, and unexpected failures during credential validation.
-
-### Focus Areas
 
 |Risk	|Exploration Focus	|Priority   |
 |-------|-------------------|-----------|
@@ -98,7 +90,7 @@ Authentication bypass, incorrect session termination, unauthorized protected-pag
 - **Consistency:** Repeat equivalent actions in different sequences.
 - **Recovery behavior:** Investigate whether the application returns to a valid state after unexpected actions.
 - **Security:** Challenge access restrictions and session termination.
-s
+
 ## 4. Test Environment
 
 **Where will exploration take place?**
@@ -128,13 +120,9 @@ A desktop browser, browser DevTools, the application's documented test credentia
 **How will we explore the system?**
 Use time-boxed, risk-based exploratory testing. Begin with the normal login and logout flow to establish a baseline, then investigate authentication boundaries through unexpected inputs, navigation sequences, session-state changes, and browser behavior.
 
+### Approach
 **What paths or behaviors will we investigate?**
 Investigate successful and failed authentication, direct access to the secure page, login/logout transitions, browser Back/Forward/Refresh, repeated submissions, session behavior, and transitions between authenticated and unauthenticated states.
-
-**What variations should we try?**
-Vary credential validity, input content, input length, whitespace, character combinations, action order, repeated actions, navigation method, and authentication state. Compare equivalent behaviors performed through different sequences to identify inconsistencies.
-
-### Approach
 
 |Path	|Investigation   |
 |-------|----------------|
@@ -150,6 +138,9 @@ Vary credential validity, input content, input length, whitespace, character com
 
 ### Variations
 
+**What variations should we try?**
+Vary credential validity, input content, input length, whitespace, character combinations, action order, repeated actions, navigation method, and authentication state. Compare equivalent behaviors performed through different sequences to identify inconsistencies.
+
 |Dimension	|Variations  |
 |-----------|------------|
 |Credentials	|Valid, invalid, partially valid, empty  |
@@ -162,16 +153,12 @@ Vary credential validity, input content, input length, whitespace, character com
 
 ## 6. Session Notes
 
-**What did we observe?**
-Normal authentication and invalid-credential feedback behaved as expected. Direct access to /secure without authentication redirected to the login page. However, during one simulated navigation sequence, the browser displayed previously loaded protected-page content after logout when the Back button was used. Refreshing that page redirected to login.
-
 **What actions were performed during exploration?**
 I established the normal login and logout behavior using the provided valid credentials. I then explored invalid and empty credentials, direct navigation to /secure, page refreshes, browser history, and repeated login/logout sequences. During the session, I also investigated whether the application behaved consistently when revisiting a protected page after logout.
 
-**What new questions emerged?**
-Does the post-logout behavior expose cached protected content, or does it indicate that the server continues to accept an invalidated session? Does the behavior differ across browsers or cache configurations? What are the application's explicit requirements for browser-history behavior after logout?
-
 ### Observations
+**What did we observe?**
+Normal authentication and invalid-credential feedback behaved as expected. Direct access to /secure without authentication redirected to the login page. However, during one simulated navigation sequence, the browser displayed previously loaded protected-page content after logout when the Back button was used. Refreshing that page redirected to login.
 
 |Time    |Action / Investigation  |Observation  |Evidence   |
 |--------|------------------------|-------------|-----------|
@@ -190,6 +177,8 @@ Does the post-logout behavior expose cached protected content, or does it indica
 > Evidence references represent example files in a hypothetical test-evidence repository.
 
 ### Questions Raised
+**What new questions emerged?**
+Does the post-logout behavior expose cached protected content, or does it indicate that the server continues to accept an invalidated session? Does the behavior differ across browsers or cache configurations? What are the application's explicit requirements for browser-history behavior after logout?
 
 - Does the protected response include appropriate cache-control headers? 
 - Is the behavior reproducible in Firefox, Edge, or a private browsing session? 
@@ -216,8 +205,16 @@ Screenshots document successful and unsuccessful authentication. Video recording
 
 ## 8. Defects
 
+
+
+### Defects Found
+
 **What behavior is actually incorrect?**
 One simulated defect was recorded: previously loaded protected-page content remained visible through browser Back navigation after logout. It is classified as a provisional defect because the expected post-logout cache and history behavior requires confirmation.
+
+|Defect ID  |Description    |Severity   |Related Risk   |Status |
+| --------- | ------------- | --------- | ------------- | ----- |
+|BUG-001    |Protected-page content remains visible through browser Back navigation after logout |Medium, provisional |Exposure of previously viewed content after logout   |Open — requires technical confirmation |
 
 **How can the defect be reproduced?**
 1. Open /login in a fresh Chrome session.
@@ -229,16 +226,8 @@ One simulated defect was recorded: previously loaded protected-page content rema
 7. Observe whether the previously loaded protected page becomes visible.
 8. Refresh the page and observe whether access is denied.
 
-
 **What impact or risk does each defect introduce?**
 A subsequent user of the same browser could potentially see information displayed during the previous user's authenticated session. The observed behavior does not, by itself, demonstrate that the previous session remains active or that new protected information can be retrieved.
-
-### Defects Found
-
-|Defect ID  |Description    |Severity   |Related Risk   |Status |
-| --------- | ------------- | --------- | ------------- | ----- |
-|BUG-001    |Protected-page content remains visible through browser Back navigation after logout |Medium, provisional |Exposure of previously viewed content after logout   |Open — requires technical confirmation |
-
 
 ## 9. Follow-Up
 
