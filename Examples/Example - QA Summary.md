@@ -1,12 +1,10 @@
 # QA Summary
 
 ## 1. Release / Feature Overview
-
-**What was tested?** The User Login / Form Authentication feature of The Internet practice application, including credential validation, protected-page access, logout, session-state transitions, and browser navigation. <br>
-**Why was the testing performed?** To evaluate the core authentication workflow and investigate whether protected content remains appropriately restricted when a user transitions from an authenticated to an unauthenticated state. <br>
-**Who or what will be affected by the release?** To evaluate the core authentication workflow and investigate whether protected content remains appropriately restricted when a user transitions from an authenticated to an unauthenticated state.
+**Why was the testing performed?** To evaluate the core authentication workflow and investigate whether protected content remains appropriately restricted when a user transitions from an authenticated to an unauthenticated state. 
 
 ### Release / Feature
+**What was tested?** The User Login / Form Authentication feature of The Internet practice application, including credential validation, protected-page access, logout, session-state transitions, and browser navigation. <br>
 * Application: The Internet
 * Feature: User Login / Form Authentication
 * Execution ID: TEE-LOGIN-001
@@ -25,6 +23,7 @@
 * Total duration: 60 minutes
 
 ### Affected Areas
+**Who or what will be affected by the release?** To evaluate the core authentication workflow and investigate whether protected content remains appropriately restricted when a user transitions from an authenticated to an unauthenticated state. <br>
 * Login and credential validation
 * Authentication-state transitions
 * Protected-page access
@@ -35,11 +34,9 @@
 
 ## 2. Testing Performed
 
-**What types of testing were performed?**  Manual functional testing, regression-oriented checks, integration-oriented authentication checks, UI testing, and exploratory testing. <br>
-**Which areas received the most testing attention?**  Credential validation, protected-page access, logout behavior, authentication-state transitions, and browser navigation after logout. <br>
-**Why were these areas prioritized?** These areas were prioritized because authentication and session-state failures can undermine access restrictions or expose protected information. The testing first established expected behavior in normal login flows, then investigated less predictable transitions involving logout, browser history, and refresh.
-
 ### Testing Types
+**What types of testing were performed?**  Manual functional testing, regression-oriented checks, integration-oriented authentication checks, UI testing, and exploratory testing.
+
 - [x] Functional
 - [x] Regression
 - [x] Integration
@@ -53,15 +50,15 @@
 - [ ] Other:
 
 ### Priority Areas
+**Which areas received the most testing attention?**  Credential validation, protected-page access, logout behavior, authentication-state transitions, and browser navigation after logout.
+
 1. **Authentication and credential validation:** Verify successful login, rejection of invalid credentials, and handling of empty submissions.
 2. **Protected-page access and session termination:** Verify access restrictions, logout behavior, refresh behavior, and direct access after logout.
 3. **Browser navigation after logout:** Investigate whether previously loaded protected content reappears through Back navigation and determine whether the behavior involves browser caching or session management.
 
-## 3. Test Results
+**Why were these areas prioritized?** These areas were prioritized because authentication and session-state failures can undermine access restrictions or expose protected information. The testing first established expected behavior in normal login flows, then investigated less predictable transitions involving logout, browser history, and refresh.
 
-**What was tested?**  Twelve recorded scenarios covering authentication, invalid and empty credentials, protected-page access, refresh, logout, repeated authentication transitions, and browser Back navigation. <br>
-**What were the results?**  Ten scenarios passed, one failed, and one requires further investigation. The primary unresolved finding involves previously loaded protected content reappearing after logout through browser Back navigation. <br>
-**How much of the planned testing was completed?** All 12 recorded scenarios were executed within the simulated test cycle. This represents 100% scenario execution coverage, not complete functional or security coverage. <br>
+## 3. Test Results
 
 | Metric | Result |
 | ------ | ------ |
@@ -74,11 +71,16 @@
 | Investigate / Inconclusive | 1 |
 
 ### Pass Rate
+**What were the results?**  Ten scenarios passed, one failed, and one requires further investigation. The primary unresolved finding involves previously loaded protected content reappearing after logout through browser Back navigation.
+
 * 83.3%
 * Calculation: 10 passed ÷ 12 executed × 100.
 * The failed and investigate/inconclusive scenarios are included in the denominator.
 
 ### Coverage
+**What was tested?**  Twelve recorded scenarios covering authentication, invalid and empty credentials, protected-page access, refresh, logout, repeated authentication transitions, and browser Back navigation. <br>
+**How much of the planned testing was completed?** All 12 recorded scenarios were executed within the simulated test cycle. This represents 100% scenario execution coverage, not complete functional or security coverage.
+
 * Scenario execution coverage: 100%
 * Areas covered: valid and invalid authentication, empty credentials, protected-page access, refresh, logout, authentication recovery, repeated login/logout, and browser Back navigation.
 * Coverage limitations: no comprehensive cross-browser, performance, accessibility, or specialized security testing.
@@ -108,30 +110,32 @@ BUG-001 is Open / Investigation Required.
 
 ## 5. Risk Assessment
 
-**What are the most important remaining risks?**  The principal remaining risk is the potential exposure of protected content after logout. Additional uncertainty exists around session invalidation and browser-specific behavior. <br>
-**What evidence supports the risk assessment?**  The simulated execution records show that protected content reappeared through Back navigation in 2 of 3 attempts, while refreshing the redisplayed page redirected the user to /login. Direct access to /secure after logout was also denied. <br>
-**What could happen if these risks materialize?** If protected information remains visible to another person using the same browser, confidential information could be exposed. If investigation additionally reveals that the server returns protected content to an unauthenticated request, the issue may represent a more serious authentication/session-management failure.
-
 ### Remaining Risks
+**What are the most important remaining risks?**  The principal remaining risk is the potential exposure of protected content after logout. Additional uncertainty exists around session invalidation and browser-specific behavior. 
+
 1. Post-logout content exposure: Previously viewed protected content may remain visible through browser history after logout.
 2. Unverified session invalidation: Server-side session termination has not been independently verified through network-level investigation.
 3. Incomplete browser coverage: The behavior has not been evaluated across multiple browsers and cache conditions.
+
+**What evidence supports the risk assessment?**  The simulated execution records show that protected content reappeared through Back navigation in 2 of 3 attempts, while refreshing the redisplayed page redirected the user to /login. Direct access to /secure after logout was also denied.
 
 ### Overall Risk
 - Medium — provisional
 
 ### Risk Rationale
-The issue is reproducible in the simulated evidence and concerns potentially protected information. However, direct access to /secure after logout was denied, and refreshing the redisplayed page redirected to login. The available evidence does not establish a successful unauthorized server request.
+**What could happen if these risks materialize?** If protected information remains visible to another person using the same browser, confidential information could be exposed. If investigation additionally reveals that the server returns protected content to an unauthenticated request, the issue may represent a more serious authentication/session-management failure. <br>
+
+The issue is reproducible in the simulated evidence and concerns potentially protected information. However, direct access to /secure after logout was denied, and refreshing the redisplayed page redirected to login. The available evidence does not establish a successful unauthorized server request. <br>
 
 The risk rating must be reviewed after technical investigation. If an unauthenticated request can retrieve protected information, the risk assessment and release recommendation should be escalated accordingly.
 
 ## 6. Testing Limitations
 
-**What could not be tested?**  Comprehensive cross-browser behavior, performance, accessibility, specialized penetration testing, backend implementation, and independent server-side session invalidation were not verified. <br>
-**Why could it not be tested?**  The execution was limited to a 60-minute simulated session using desktop Chrome. The technical investigation needed to distinguish browser history/cache behavior from a session-management failure was not completed. <br>
-**What risk does this limitation create?** The team cannot yet determine the complete scope or severity of the potential post-logout content exposure, nor can it generalize the results to other browsers or environments.
-
 ### Limitations
+
+**What could not be tested?**  Comprehensive cross-browser behavior, performance, accessibility, specialized penetration testing, backend implementation, and independent server-side session invalidation were not verified. <br>
+**Why could it not be tested?**  The execution was limited to a 60-minute simulated session using desktop Chrome. The technical investigation needed to distinguish browser history/cache behavior from a session-management failure was not completed.
+
 * Testing was limited to desktop Chrome.
 * Build/version and operating-system details were not recorded.
 * Network-level investigation was not completed.
@@ -141,22 +145,27 @@ The risk rating must be reviewed after technical investigation. If an unauthenti
 * Cross-browser, performance, accessibility, and specialized security testing were excluded.
 
 ### Impact
+**What risk does this limitation create?** The team cannot yet determine the complete scope or severity of the potential post-logout content exposure, nor can it generalize the results to other browsers or environments. <br>
+
 The results support a preliminary assessment of the selected authentication scenarios, but they do not provide sufficient evidence to declare the feature fully verified or to rule out a session-management defect.
 
 ## 7. Quality Assessment
 
-**What does the collected evidence tell us about product quality?**  The primary authentication flows behaved as expected under the tested conditions. However, the unexpected Back-navigation behavior indicates a potential weakness in post-logout handling that requires investigation. <br>
-**What confidence do we have in the release?**  Confidence is Medium — provisional for the tested core authentication behavior, but insufficient for unrestricted approval of the feature's logout and protected-content behavior. <br>
-**What important uncertainties remain?** The main uncertainty is whether protected content is being retrieved after logout or merely redisplayed from browser history/cache. Server-side session invalidation and behavior in other browsers also remain unverified.
-
 ### Quality Assessment
+
+**What does the collected evidence tell us about product quality?**  The primary authentication flows behaved as expected under the tested conditions. However, the unexpected Back-navigation behavior indicates a potential weakness in post-logout handling that requires investigation.
+
 - Core authentication behavior was consistent with expectations across the recorded positive and negative login scenarios.
 - Direct protected-page access after logout was denied.
 - The post-logout Back-navigation behavior was unexpected and reproduced in 2 of 3 simulated attempts.
 - The feature requires follow-up investigation before unrestricted QA approval.
 
 ### Confidence Level
+**What confidence do we have in the release?**  Confidence is Medium — provisional for the tested core authentication behavior, but insufficient for unrestricted approval of the feature's logout and protected-content behavior.
+
 - Medium — provisional
+
+**What important uncertainties remain?** The main uncertainty is whether protected content is being retrieved after logout or merely redisplayed from browser history/cache. Server-side session invalidation and behavior in other browsers also remain unverified.
 
 ### Confidence Rationale
 Confidence is supported by the recorded outcomes for 12 scenarios, including the primary login, logout, and protected-page access flows. It is limited by one failed scenario, one scenario requiring investigation, the absence of network-level confirmation, and the lack of cross-browser verification.
