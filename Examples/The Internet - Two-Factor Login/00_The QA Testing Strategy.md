@@ -7,23 +7,17 @@
 **Objective:** Validate that users can authenticate successfully with valid credentials and the two-factor OTP, and are appropriately prevented from accessing the secure area with invalid credentials and the two-factor OTP.
 
 ## Feature Overview
-- What is being changed or introduced? The two-factor OTP on the login process. 
-- Who will use or be affected by it?  
-- Why is the feature being implemented?
+The feature tha was introduce to the system is the two-factor OTP on the login process. The intended entity that would be affected by this new feature would be the user, This feature is being implemented with the poupose to increase the security of the login process.
 
 ## Risks
-- What could go wrong?
-- Who/what would be affected if it failed?
-- How could the failure impact the business or users?
+The major risk is allowing access with invalid OTP, either wrong code or empty input. If the feature failes the system and the user will be voulnerable. The user or system information and data will be open to loses and miss uses.
 
 ### Risk Level
 
-Low / Medium / High / Critical
+Medium
 
 ## Test Scope
-- What needs to be tested?
-- What is explicitly out of scope?
-- Whew could the change have side effects?
+The two-factor authentication of the login feature usin valid and invalid inputs. The login feature is out of scope for this session of testing.
 
 ## Test Levels
 - What level of testing is needed?
