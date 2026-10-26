@@ -14,15 +14,24 @@ The major risk is allowing access with invalid OTP, either wrong code or empty i
 
 ### Risk Level
 
-Medium
+**High**
 
 ## Test Scope
-The two-factor authentication of the login feature usin valid and invalid inputs. The login feature is out of scope for this session of testing.
+The two-factor authentication of the login feature usin valid and invalid inputs. 
+    - Empty Credentials
+    - Valid OTP
+    - Invalid OTP
+    - Expired OTP
+The login feature is out of scope for this session of testing.
 
 ## Test Levels
-- What level of testing is needed?
-- Where should each level be performed?
-- Why is each level necessary for this feature?
+
+The tests would be perfomre primarily through the web UI, while using browser DevTools where useful to inspect requests, cookies, and session behavior. The following levels are needed.
+   
+    - Functional testing
+    - Negative testing
+    - Exploratory testing
+    - Integration/system-level validation
 
 ## Dependecies & Assumptions
 - What does this feature depend on?
