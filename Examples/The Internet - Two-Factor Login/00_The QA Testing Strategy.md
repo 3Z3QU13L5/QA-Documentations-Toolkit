@@ -34,26 +34,23 @@ The tests would be perfomre primarily through the web UI, while using browser De
     - Integration/system-level validation
 
 ## Dependecies & Assumptions
-- What does this feature depend on? login process, otp api
-- Who/whats could prevent it from working correctly? a malfunction of the api
-- What assumptions are we making? The valid OTP is being provided.
 
-> **QA Note:** This section is particularly valuable because it exposes questions we might need to ask the developer/PO before testing.
+This feature, the two-factor authentication login, depend on the normal login process and the OTP code recived from the api. The malfuntion of the api could prevent it from working correctly, so we are assuming the OTP code provided is the valid code for the 2F authentication.
 
 ## Enviroments
-- Where will the feature be tested? The browser On the browser application 
-- What enviroment/configuration is required? Access to internet, a browser and The Internet application
-- How will we know the enviroment is ready? 
+
+The two-factor authentication will be tested on the browser application. For this test is rwquired to have access to internet, a browser and the application The Internet application. And being able to acces the application the enviroment should be ready to proceed with the test. 
 
 ## Test Data
-- What data is needed? Login credentials and OTP code.
-- Who/what provides or creates it? they are provided by the browser's application
-- How should the data look or behave to cover the important scenarios? 
+
+The login credentials and OTP code, these data is provide by the browser's applcation "The Internet", and this are:
+- Valide User.
+- Valid Password.
+- Valid OTP code.
 
 ## Regression Impact
-- What existing functionality could be affected? The loggin process completion, access to the TK site
-- Where are the dependencies or integration points? 
-- How much regression testing is needed?
+
+Within the functionality that could be affected by this feature are the loggin process, access to the secure site/page.
 
 ## Entry Criteria
 - What must be ready before testing start?
