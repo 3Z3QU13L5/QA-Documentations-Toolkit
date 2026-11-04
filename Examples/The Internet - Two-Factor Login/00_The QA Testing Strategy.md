@@ -53,12 +53,10 @@ The login credentials and OTP code, these data is provide by the browser's applc
 Within the functionality that could be affected by this feature are the loggin process, access to the secure site/page.
 
 ## Entry Criteria
-- What must be ready before testing start?
-- Who needs to provide or approve it?
-- How do we verify that we're ready?
+
+The login page should be available and set with the two-factor authentication, the valid credentials and OTP Code, and the test enviroment accessable. The team should provide the credentials and OTP code. To verify that we are ready to test, enter the site and follow the normal login process.
 
 ## Exit Criteria
-- What must ve succesfully tested before realease?
-- What defects or risks are acceptanble?
-- Who needs to approve or accept the remaining risk?
+
+For realease the valid authentication and the OTP code should works, the invalid credentials and OTP code are rejected, secure content requires authentication, Logout works correctly, critical authentication defects are resolved. No critical or high-risk issues are still present. 
 
